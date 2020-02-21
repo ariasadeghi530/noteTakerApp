@@ -12,22 +12,19 @@ app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/notes.html'));
 });
 
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.get('api/notes', (req, res) => {
   fs.readFile('./db/db.json', 'utf8', (e, data) => {
     if (e) { console.log(e) }
-
-    const notes = JSON.parse(data);
-
-    res.json(notes);
+    res.json(JSON.parse(data));
   })
 })
 
 app.post('/api/notes', (req, res) => {
-  fs.readFile('/db/db.json', 'utf8', (e, data) => {
+  fs.readFile('./db/db.json', 'utf8', (e, data) => {
     if (e) { console.log(e) }
 
     const notes = JSON.parse(data);
@@ -42,7 +39,7 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-  fs.readFile('db.json', 'utf8', (e, data) => {
+  fs.readFile('./db/db.json', 'utf8', (e, data) => {
     if (e) { console.log(e) }
 
     const notes = JSON.parse(data);
