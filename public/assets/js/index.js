@@ -71,11 +71,11 @@ var handleNoteDelete = function(event) {
     .parent(".list-group-item")
     .data();
 
-  if (activeNote.id === note.id) {
+  if (activeNote.title === note.title) {
     activeNote = {};
   }
-
-  deleteNote(note.id).then(function() {
+ 
+  deleteNote(note.title).then(function() {
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -104,14 +104,15 @@ var handleRenderSaveBtn = function() {
 };
 
 // Render's the list of note titles
-var renderNoteList = function(notes) {
+var renderNoteList = function (notes) {
   $noteList.empty();
 
   var noteListItems = [];
 
   for (var i = 0; i < notes.length; i++) {
+    
     var note = notes[i];
-
+    
     var $li = $("<li class='list-group-item'>").data(note);
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
@@ -120,17 +121,20 @@ var renderNoteList = function(notes) {
 
     $li.append($span, $delBtn);
     noteListItems.push($li);
+   
   }
 
   $noteList.append(noteListItems);
 };
 
 // Gets notes from the db and renders them to the sidebar
-var getAndRenderNotes = function() {
-  return getNotes().then(function(data) {
+var getAndRenderNotes = function () {
+  return getNotes().then(function (data) {
+    
     renderNoteList(data);
   });
 };
+
 
 $saveNoteBtn.on("click", handleNoteSave);
 $noteList.on("click", ".list-group-item", handleNoteView);
